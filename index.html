@@ -19,7 +19,6 @@
             <h2>📝 경기 기록 입력</h2>
             <form id="game-form">
                 <label>날짜: <input type="date" id="game-date" required /></label><br/>
-                <label>코트: <input type="text" id="court" required /></label><br/>
                 <label>팀1: 
                     <select id="team1-player1"></select> / 
                     <select id="team1-player2"></select>
@@ -28,7 +27,9 @@
                     <select id="team2-player1"></select> / 
                     <select id="team2-player2"></select>
                 </label><br/>
-                <label>스코어: <input type="text" id="score" placeholder="예: 6-3" /></label><br/>
+                <label>스코어: 
+                    <select id="score"></select>
+                </label><br/>
                 <button type="submit">기록 추가</button>
             </form>
             <div id="records-table"></div>

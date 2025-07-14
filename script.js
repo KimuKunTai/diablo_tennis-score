@@ -1,4 +1,4 @@
-const players = Array.from({length: 30}, (_, i) => `선수${i+1}`);
+const players = ['김근태', '김남진', '김동현', '김재용', '김준현', '박정규', '박종혁', '성제현', '손가람', '송지훈', '염성민', '이명진', '이우진', '이정현', '이진우', '이해동', '이현철', '장이현', '장준원', '전유준', '정상돈', '최선우', '최성욱', '최준희', '하지훈'];
 const selectedPlayers = new Set();
 const records = [];
 
@@ -10,8 +10,10 @@ const team2p2 = document.getElementById('team2-player2');
 const gameForm = document.getElementById('game-form');
 const recordsTable = document.getElementById('records-table');
 const partnerAnalysis = document.getElementById('partner-analysis');
+const scoreSelect = document.getElementById('score');
 
 function renderAttendees() {
+    attendeeList.innerHTML = "";
     players.forEach(name => {
         const btn = document.createElement('button');
         btn.textContent = name;
@@ -33,13 +35,14 @@ function togglePlayer(name, btn) {
 }
 
 function updatePlayerSelects() {
-    [team1p1, team1p2, team2p1, team2p2].forEach(select => {
-        select.innerHTML = '';
-        selectedPlayers.forEach(name => {
+    const teamSelects = [team1p1, team1p2, team2p1, team2p2];
+    teamSelects.forEach(select => select.innerHTML = '');
+    selectedPlayers.forEach(name => {
+        teamSelects.forEach(select => {
             const option = document.createElement('option');
             option.value = name;
             option.textContent = name;
-            select.appendChild(option);
+            select.appendChild(option.cloneNode(true));
         });
     });
 }
@@ -47,41 +50,38 @@ function updatePlayerSelects() {
 gameForm.onsubmit = function(e) {
     e.preventDefault();
     const date = document.getElementById('game-date').value;
-    const court = document.getElementById('court').value;
-    const t1p1 = team1p1.value;
-    const t1p2 = team1p2.value;
-    const t2p1 = team2p1.value;
-    const t2p2 = team2p2.value;
-    const score = document.getElementById('score').value;
+    const t1 = [team1p1.value, team1p2.value];
+    const t2 = [team2p1.value, team2p2.value];
+    const score = scoreSelect.value;
 
-    if (new Set([t1p1, t1p2, t2p1, t2p2]).size < 4) {
-        alert("한 경기 내에 선수 중복 없이 선택해주세요.");
+    const allPlayers = new Set([...t1, ...t2]);
+    if (allPlayers.size < 4) {
+        alert("모든 선수는 서로 겹치지 않아야 합니다.");
         return;
     }
 
-    records.push({date, court, team1: [t1p1, t1p2], team2: [t2p1, t2p2], score});
+    records.push({date, team1: t1, team2: t2, score});
     renderRecords();
 };
 
 function renderRecords() {
-    let html = '<table><tr><th>날짜</th><th>코트</th><th>팀1</th><th>팀2</th><th>스코어</th></tr>';
+    let html = '<table><tr><th>날짜</th><th>팀1</th><th>팀2</th><th>스코어</th></tr>';
     records.forEach(r => {
-        html += `<tr><td>${r.date}</td><td>${r.court}</td><td>${r.team1.join(' / ')}</td><td>${r.team2.join(' / ')}</td><td>${r.score}</td></tr>`;
+        html += `<tr><td>${r.date}</td><td>${r.team1.join(' / ')}</td><td>${r.team2.join(' / ')}</td><td>${r.score}</td></tr>`;
     });
     html += '</table>';
     recordsTable.innerHTML = html;
 }
 
 function analyzePartners() {
-    const counts = {};
+    const counts = {}
     records.forEach(r => {
-        const teamCombos = [r.team1, r.team2];
-        teamCombos.forEach(team => {
+        [r.team1, r.team2].forEach(team => {
             for (let i = 0; i < team.length; i++) {
                 for (let j = i+1; j < team.length; j++) {
                     const a = team[i], b = team[j];
-                    if (!counts[a]) counts[a] = {};
-                    if (!counts[b]) counts[b] = {};
+                    if (!counts[a]) counts[a] = {}
+                    if (!counts[b]) counts[b] = {}
                     counts[a][b] = (counts[a][b] || 0) + 1;
                     counts[b][a] = (counts[b][a] || 0) + 1;
                 }
@@ -100,4 +100,15 @@ function analyzePartners() {
     partnerAnalysis.innerHTML = result || '<p>기록된 경기가 없습니다.</p>';
 }
 
+function renderScoreOptions() {
+    const scores = ["6-0", "6-1", "6-2", "6-3", "6-4", "7-5", "7-6"];
+    scores.forEach(score => {
+        const option = document.createElement('option');
+        option.value = score;
+        option.textContent = score;
+        scoreSelect.appendChild(option);
+    });
+}
+
 renderAttendees();
+renderScoreOptions();
