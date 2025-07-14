@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>디아블로 테니스클럽 게임운영</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1>🎾 디아블로 테니스클럽 게임운영</h1>
+  <form id="gameForm">
+    <input type="date" id="date" required />
+    <input type="text" id="player1" placeholder="선수1 이름" required />
+    <input type="number" id="score1" placeholder="점수1" min="0" required />
+    <input type="text" id="player2" placeholder="선수2 이름" required />
+    <input type="number" id="score2" placeholder="점수2" min="0" required />
+    <input type="text" id="player3" placeholder="선수3 이름" required />
+    <input type="number" id="score3" placeholder="점수3" min="0" required />
+    <input type="text" id="player4" placeholder="선수4 이름" required />
+    <input type="number" id="score4" placeholder="점수4" min="0" required />
+    <button type="submit">기록 추가</button>
+  </form>
+  <div id="recordList"></div>
+  <canvas id="winRateChart" width="400" height="200"></canvas>
+  <button onclick="exportCSV()">엑셀로 내보내기</button>
+  <script src="script.js"></script>
+</body>
+</html>
