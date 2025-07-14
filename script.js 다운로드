@@ -1,4 +1,3 @@
-
 const form = document.getElementById('gameForm');
 const recordList = document.getElementById('recordList');
 const chartCanvas = document.getElementById('winRateChart');
