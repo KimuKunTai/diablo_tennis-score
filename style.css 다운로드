@@ -1,15 +1,23 @@
-
 body {
   background: #121212;
   color: #ffffff;
   font-family: sans-serif;
   padding: 2rem;
 }
-input, button {
+input, button, select {
   margin: 0.5rem;
   padding: 0.5rem;
   font-size: 1rem;
 }
 h1 {
   color: #4fe3c1;
+}
+fieldset {
+  border: 1px solid #4fe3c1;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+legend {
+  color: #4fe3c1;
+  font-weight: bold;
 }
