@@ -1,0 +1,128 @@
+body {
+  background-color: #121212;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+.container {
+  max-width: 800px;
+  margin: auto;
+}
+header {
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+header div:first-child {
+  font-size: 2.4em;
+  font-weight: bold;
+  color: #ff4444;
+}
+header div:nth-child(2) {
+  font-size: 2em;
+  color: #ff8888;
+}
+header div:nth-child(3) {
+  font-size: 1.6em;
+  color: #ffaa88;
+}
+h2 {
+  color: #00ffcc;
+}
+#attendee-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+.player-button {
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 100%;
+  font-weight: 600;
+}
+.player-button.selected {
+  background-color: #00ffcc;
+  color: #000;
+}
+
+/* 스크롤 없애고 외형 깔끔하게 */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #1e1e1e;
+  color: white;
+  border: 1px solid #888;
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin: 4px;
+  background-image: none !important;
+  scrollbar-width: none; /* Firefox */
+}
+select::-ms-expand {
+  display: none; /* IE */
+}
+select::-webkit-scrollbar {
+  display: none; /* Chrome */
+}
+
+input[type="date"] {
+  padding: 6px 12px;
+  font-size: 14px;
+  margin: 4px;
+  border-radius: 4px;
+  border: 1px solid #999;
+  background-color: #1e1e1e;
+  color: white;
+  appearance: none;
+}
+
+/* 기록추가 버튼을 동그란 V로 변경 */
+button[type="submit"] {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  background-color: #00ffcc;
+  color: black;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+button[type="submit"]::before {
+  content: "✔";
+}
+
+/* 기타 버튼 기본 스타일 */
+button:not([type="submit"]) {
+  padding: 6px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  background-color: #00ffcc;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+table, th, td {
+  border: 1px solid #ffffff;
+}
+th, td {
+  padding: 8px;
+  text-align: center;
+}
