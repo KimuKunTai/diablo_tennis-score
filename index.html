@@ -18,18 +18,21 @@
     <section class="game-records">
       <h2>📝 경기 기록 입력</h2>
       <form id="game-form">
-        <label>날짜: <input type="date" id="game-date" required /></label><br/>
-        <label>팀1: 
-          <select id="team1-player1"></select> / 
+        <label>날짜: <input type="date" id="game-date" required /></label><br/><br/>
+        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+          <select id="team1-player1"></select>
           <select id="team1-player2"></select>
-          <select id="score1"></select>
-        </label><br/>
-        <label>팀2: 
-          <select id="team2-player1"></select> / 
+          <strong>vs</strong>
+          <select id="team2-player1"></select>
           <select id="team2-player2"></select>
-          <select id="score2"></select>
-        </label><br/>
-        <button type="submit">기록 추가</button>
+        </div>
+        <br/>
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <label>스코어: 
+            <select id="score1"></select> - <select id="score2"></select>
+          </label>
+          <button type="submit">기록 추가</button>
+        </div>
       </form>
       <h3>📅 날짜별 필터</h3>
       <input type="date" id="filter-date" />
