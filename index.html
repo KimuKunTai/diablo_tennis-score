@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>디아블로 테니스클럽 게임운영</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>🎾 디아블로 테니스클럽 게임운영</h1>
+        
+        <section class="attendees">
+            <h2>✅ 참석자 선택</h2>
+            <div id="attendee-list"></div>
+        </section>
+
+        <section class="game-records">
+            <h2>📝 경기 기록 입력</h2>
+            <form id="game-form">
+                <label>날짜: <input type="date" id="game-date" required /></label><br/>
+                <label>코트: <input type="text" id="court" required /></label><br/>
+                <label>팀1: 
+                    <select id="team1-player1"></select> / 
+                    <select id="team1-player2"></select>
+                </label><br/>
+                <label>팀2: 
+                    <select id="team2-player1"></select> / 
+                    <select id="team2-player2"></select>
+                </label><br/>
+                <label>스코어: <input type="text" id="score" placeholder="예: 6-3" /></label><br/>
+                <button type="submit">기록 추가</button>
+            </form>
+            <div id="records-table"></div>
+        </section>
+
+        <section class="analysis">
+            <h2>📊 파트너 분석</h2>
+            <button onclick="analyzePartners()">분석 실행</button>
+            <div id="partner-analysis"></div>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
