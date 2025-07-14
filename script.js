@@ -165,5 +165,11 @@ function init() {
   updatePlayerSelects();
   renderRecords();
 }
-
+document.addEventListener("DOMContentLoaded", function () {
+  const today = new Date().toISOString().split("T")[0];
+  const gameDateInput = document.getElementById("game-date");
+  const filterDateInput = document.getElementById("filter-date");
+  if (gameDateInput) gameDateInput.value = today;
+  if (filterDateInput) filterDateInput.value = today;
+});
 init();
