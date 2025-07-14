@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>디아블로 테니스클럽 게임운영</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #f1f1f1;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #ff5c5c;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        label {
+            margin-right: 10px;
+        }
+        select, input[type="number"], input[type="text"] {
+            padding: 5px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #2e2e2e;
+            color: white;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #ff5c5c;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #e04c4c;
+        }
+        .player-list label {
+            display: inline-block;
+            width: 120px;
+        }
+    </style>
+</head>
+<body>
+    <h1>디아블로 테니스클럽 게임운영</h1>
+    <div class="section">
+        <h2>✅ 참석자 선택 (<span id="selectedCount">0</span>명)</h2>
+        <div class="player-list" id="playerList"></div>
+    </div>
+    <div class="section">
+        <h2>🎾 경기 결과 입력</h2>
+        <form id="gameForm">
+            <div>
+                <label for="team1_player1">팀1 선수1:</label>
+                <select id="team1_player1"></select>
+                <label for="team1_player2">선수2:</label>
+                <select id="team1_player2"></select>
+            </div>
+            <div>
+                <label for="team2_player1">팀2 선수1:</label>
+                <select id="team2_player1"></select>
+                <label for="team2_player2">선수2:</label>
+                <select id="team2_player2"></select>
+            </div>
+            <div>
+                <label for="score1">팀1 점수:</label>
+                <input type="number" id="score1" min="0" max="7" />
+                <label for="score2">팀2 점수:</label>
+                <input type="number" id="score2" min="0" max="7" />
+            </div>
+            <button type="submit">경기 추가</button>
+        </form>
+    </div>
+    <div class="section">
+        <h2>📋 기록</h2>
+        <ul id="gameLog"></ul>
+    </div>
+    <script>
+        const players = [...Array(30).keys()].map(i => `선수${i + 1}`).concat(
+            ["게스트1", "게스트2", "게스트3", "게스트4", "게스트5"]
+        );
+        const playerListDiv = document.getElementById("playerList");
+        const selectedPlayers = new Set();
+
+        players.forEach((name, i) => {
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.id = `player_${i}`;
+            checkbox.value = name;
+            checkbox.addEventListener("change", updatePlayerSelection);
+
+            const label = document.createElement("label");
+            label.htmlFor = checkbox.id;
+            label.textContent = name;
+
+            playerListDiv.appendChild(checkbox);
+            playerListDiv.appendChild(label);
+        });
+
+        function updatePlayerSelection() {
+            selectedPlayers.clear();
+            document.querySelectorAll(".player-list input:checked").forEach(cb => {
+                selectedPlayers.add(cb.value);
+            });
+            document.getElementById("selectedCount").textContent = selectedPlayers.size;
+
+            ["team1_player1", "team1_player2", "team2_player1", "team2_player2"].forEach(id => {
+                const select = document.getElementById(id);
+                select.innerHTML = "";
+                selectedPlayers.forEach(player => {
+                    const option = document.createElement("option");
+                    option.value = player;
+                    option.textContent = player;
+                    select.appendChild(option);
+                });
+            });
+        }
+
+        document.getElementById("gameForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const p1 = document.getElementById("team1_player1").value;
+            const p2 = document.getElementById("team1_player2").value;
+            const p3 = document.getElementById("team2_player1").value;
+            const p4 = document.getElementById("team2_player2").value;
+            const s1 = document.getElementById("score1").value;
+            const s2 = document.getElementById("score2").value;
+
+            if (new Set([p1, p2, p3, p4]).size < 4) {
+                alert("선수는 중복 없이 선택해주세요.");
+                return;
+            }
+
+            const log = document.getElementById("gameLog");
+            const li = document.createElement("li");
+            li.textContent = `[${p1}, ${p2}] ${s1} : ${s2} [${p3}, ${p4}]`;
+            log.appendChild(li);
+
+            document.getElementById("gameForm").reset();
+        });
+    </script>
+</body>
+</html>
