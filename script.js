@@ -7,10 +7,12 @@ const team1p1 = document.getElementById('team1-player1');
 const team1p2 = document.getElementById('team1-player2');
 const team2p1 = document.getElementById('team2-player1');
 const team2p2 = document.getElementById('team2-player2');
+const score1 = document.getElementById('score1');
+const score2 = document.getElementById('score2');
+const gameDate = document.getElementById('game-date');
 const gameForm = document.getElementById('game-form');
 const recordsTable = document.getElementById('records-table');
 const partnerAnalysis = document.getElementById('partner-analysis');
-const scoreSelect = document.getElementById('score');
 
 function renderAttendees() {
     attendeeList.innerHTML = "";
@@ -35,32 +37,37 @@ function togglePlayer(name, btn) {
 }
 
 function updatePlayerSelects() {
-    const teamSelects = [team1p1, team1p2, team2p1, team2p2];
-    teamSelects.forEach(select => select.innerHTML = '');
+    const allTeam = [team1p1, team1p2, team2p1, team2p2];
+    allTeam.forEach(select => select.innerHTML = '');
+
     selectedPlayers.forEach(name => {
-        teamSelects.forEach(select => {
-            const option = document.createElement('option');
-            option.value = name;
-            option.textContent = name;
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        allTeam.forEach(select => {
             select.appendChild(option.cloneNode(true));
         });
     });
 }
 
+function getSelectedNames() {
+    return [team1p1.value, team1p2.value, team2p1.value, team2p2.value];
+}
+
 gameForm.onsubmit = function(e) {
     e.preventDefault();
-    const date = document.getElementById('game-date').value;
+    const date = gameDate.value;
     const t1 = [team1p1.value, team1p2.value];
     const t2 = [team2p1.value, team2p2.value];
-    const score = scoreSelect.value;
+    const scoreValue = `${score1.value}-${score2.value}`;
 
     const allPlayers = new Set([...t1, ...t2]);
-    if (allPlayers.size < 4) {
+    if ([...allPlayers].length < 4) {
         alert("모든 선수는 서로 겹치지 않아야 합니다.");
         return;
     }
 
-    records.push({date, team1: t1, team2: t2, score});
+    records.push({date, team1: t1, team2: t2, score: scoreValue});
     renderRecords();
 };
 
@@ -101,13 +108,14 @@ function analyzePartners() {
 }
 
 function renderScoreOptions() {
-    const scores = ["6-0", "6-1", "6-2", "6-3", "6-4", "7-5", "7-6"];
-    scores.forEach(score => {
-        const option = document.createElement('option');
-        option.value = score;
-        option.textContent = score;
-        scoreSelect.appendChild(option);
-    });
+    for (let i = 0; i <= 6; i++) {
+        const opt1 = document.createElement('option');
+        opt1.value = i;
+        opt1.textContent = i;
+        const opt2 = opt1.cloneNode(true);
+        score1.appendChild(opt1);
+        score2.appendChild(opt2);
+    }
 }
 
 renderAttendees();
